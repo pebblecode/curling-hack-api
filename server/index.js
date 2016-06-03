@@ -5,6 +5,7 @@ const app = express();
 const jsonParser = bodyParser.json()
 let gameCount = 0;
 let winners = [];
+let losers = [];
 let users = [];
 
 // const DISTANCE_BETWEEN_IBEACONS = 0.5; // In metres
@@ -39,6 +40,7 @@ let users = [];
 function reset () {
   users = [];
   winners = [];
+  losers = [];
 }
 
 function checkWinner () {
@@ -54,8 +56,10 @@ function checkWinner () {
     });
     gameCount++;
   }
-  console.log(`WINNERS: ${users.map(i => i.beacons[0].proximity)}`)
-  console.log(`WINNERS: ${winners}`)
+  losers = users.filter(u => !u.winner);
+  console.log(`PROXIMITIES: ${users.map(i => i.beacons[0].proximity)}`);
+  console.log(`WINNERS: ${winners}`);
+  console.log(`LOSERS: ${losers}`);
 }
 
 app.listen(process.env.PORT || 8090, () => console.log('Starting server on 8090'));
