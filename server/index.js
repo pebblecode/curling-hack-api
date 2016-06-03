@@ -38,6 +38,7 @@ let users = [];
 
 function reset () {
   users = [];
+  winners = [];
 }
 
 function checkWinner () {
@@ -129,4 +130,14 @@ app.get('/users', cors(), jsonParser, (req, res) => {
   });
   res.write(JSON.stringify(users));
   res.end();
+});
+
+app.get('/reset', cors(), jsonParser, (req, res) => {
+  res.writeHead(200, {
+    'Content-Type': 'text/event-stream',
+    'Cache-Control': 'no-cache',
+    'Connection': 'keep-alive'
+  });
+  reset();
+  res.end('ok');
 });
